@@ -6,24 +6,23 @@
 package XuLy;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
 public class ImportLop {
-//    public class SinhVien{
-//        private String mssv;
-//        private String hoten;
-//        private String gt;
-//        private String cmnd;
-//    }
     public static void main(String[] args) {
         Scanner input=new Scanner(System.in);
         System.out.print("File cấn input:");
@@ -34,7 +33,6 @@ public class ImportLop {
         String cvsSplitBy = ",";
         ArrayList<SinhVien> arrSinhVien = new ArrayList<>();
         SinhVien sinhvien;
-	Scanner scanner = new Scanner(System.in);
         try {
 
             br = new BufferedReader(new FileReader(csvFile));
@@ -52,24 +50,15 @@ public class ImportLop {
                 //System.out.println("Country [code= " + sv[0].toString() + " , name=" + sv[1] + "]");
 
             }
-        //PrintStream f = new PrintStream("Students.txt");
+        //PrintStream f = new PrintStream("DangNhap.csv");
         System.out.print("MSSV\t\tHọ tên\t\tGiới tính\tCMND\n");
-        for (SinhVien student : arrSinhVien) {
-//            System.out.format("%5d | ", student.getmssv());
-//            System.out.format("%20s | ", student.gethoten());
-//            System.out.format("%5d | ", student.getgt());
-//            System.out.format("%20s | ", student.getcmnd());
-            
+        for (SinhVien student : arrSinhVien) {           
             System.out.print(student.getmssv()+"\t");
             System.out.print(student.gethoten()+"\t\t");
             System.out.print(student.getgt()+"\t");
             System.out.println(student.getcmnd());
-            
-            //f.print(student.getmssv()+",");
-            //f.print(student.gethoten()+",");
-            //f.print(student.getgt()+",");
-            //f.println(student.getcmnd());
         }
+        DangNhap.giaovu();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
