@@ -28,6 +28,7 @@ public class ImportLop {
         System.out.print("File cấn input:");
         String csvFile = input.nextLine();
         //String csvFile = "18HCB.csv";
+        csvFile += ".csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
