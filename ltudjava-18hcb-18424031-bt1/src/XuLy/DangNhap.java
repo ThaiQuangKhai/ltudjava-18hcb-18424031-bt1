@@ -37,6 +37,7 @@ public class DangNhap {
         ArrayList<Acccount> arrAccount = new ArrayList<>();
         Acccount account;
 	Scanner scanner = new Scanner(System.in);
+        int lan=0;
         try {
             br = new BufferedReader(new FileReader(csvFile));
             //Acccount ac;
@@ -47,17 +48,23 @@ public class DangNhap {
                 
                 //sinhvien = new SinhVien();
                 //account = new Acccount(sv[0],sv[1]);
-                if(user==ac[0]&&user=="giaovu"&&password==ac[1])
+                if(user.equals(ac[0])&&user.equals("giaovu")&&password.equals(ac[1]))
                 {
                     giaovu();
-                }else if(user==ac[0]&&password==ac[1])
+                    lan++;
+                }else if(user.equals(ac[0])&&password.equals(ac[1]))
                 {
-                    sinhvien();
+                    sinhvien(user,password);
+                    lan++;
                 }
-                System.out.println("Country [code= " + ac[0].toString() + " , name=" + ac[1] + "]");
+                //System.out.println("Country [code= " + ac[0] + " , name=" + ac[1] + "]");
 
             }
-            System.out.println("User hoạc password sai!!!");
+            if(lan!=0)
+            {
+                System.out.println("User hoạc password sai!!!");
+            }
+            System.out.println(lan);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,12 +86,12 @@ public class DangNhap {
         System.out.printf("\n11. Đổi mật khẩu");
         System.out.printf("\n0. Đăng xuất."); 
         System.out.printf("\nNhập mục cần dùng:"); 
-//        Scanner input=new Scanner(System.in);
-//        String choice = input.nextLine();
-//        switch (choice) {
-//            case "1":
-//                importlop();
-//                break;
+        Scanner input=new Scanner(System.in);
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1":
+                //ImportLop.Import();
+                break;
 //            case "2":
 //                studentId = studentManager.inputId();
 //                studentManager.edit(studentId);
@@ -102,19 +109,44 @@ public class DangNhap {
 //            case "6":
 //                studentManager.show();
 //                break;
-//            case "0":
-//                System.out.println("exited!");
-//                exit = true;
-//                break;
-//            default:
-//                System.out.println("invalid! please choose action in below menu:");
-//                break;
+              case "0":
+                  danguat();
+                  break;
+            default:
+                System.out.println("Chọn không hợp lệ, yêu cầu chọn các mục đã nêu");
+                giaovu();
+                break;
+        }
     }
     
-    public static void sinhvien()
+    public static void sinhvien(String masv, String pass)
     {
         System.out.printf("1. Xem điểm."); 
         System.out.printf("\n2. Đổi mật khẩu");
         System.out.printf("\n0. Đăng xuất."); 
+        System.out.printf("\nNhập mục cần dùng:"); 
+        Scanner input=new Scanner(System.in);
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1":
+                SinhVienXemDiem.DiemSV(masv,pass);
+                break;
+            case "0":
+                danguat();
+                break;
+            default:
+                System.out.println("Chọn không hợp lệ, yêu cầu chọn các mục đã nêu");
+                sinhvien(masv,pass);
+                break;
+        }
+    }
+    public static void danguat()
+    {
+        String[] args = null;
+        try {
+            XuLy.DangNhap.main(args);
+        } catch (IOException ex) {
+            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
