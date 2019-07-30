@@ -59,7 +59,7 @@ public class XemDSLop {
             System.out.print(student.getgt()+"\t");
             System.out.println(student.getcmnd());
         }
-        DangNhap.giaovu();
+        //DangNhap.giaovu();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
