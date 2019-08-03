@@ -5,6 +5,7 @@
  */
 package XuLy;
 
+import static XuLy.DangNhap.giaovu;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,13 +27,12 @@ public class ImportTKB {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void inporttkb(String user, String pass) throws IOException {
         Scanner input=new Scanner(System.in);
         System.out.print("Thời khóa biểu lớp:");
         String lop = input.nextLine();
         System.out.print("file chứa thời kháo biểu:");
         String csvFile = input.nextLine();
-        //String csvFile = "18HCB.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
@@ -43,46 +43,36 @@ public class ImportTKB {
         try {
             br = new BufferedReader(new FileReader(lop+".csv"));
             while ((line = br.readLine()) != null) {
-
-                // use comma as separator
                 String[] sv = line.split(cvsSplitBy);
-                //sinhvien = new SinhVien();
                 sinhvien = new SinhVien(sv[0],sv[1],sv[2],sv[3]);
                 arrSinhVien.add(sinhvien);
-
-                //System.out.println("Country [code= " + sv[0].toString() + " , name=" + sv[1] + "]");
-
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ImportTKB.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Không tìm thấy file bạn nhập vào hoạc định dạng lỗi");
+            //Logger.getLogger(ImportTKB.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             br = new BufferedReader(new FileReader(csvFile+".csv"));
+            System.out.println("Mã môn\tTên môn\t\t\tPhòng học");
             while ((line = br.readLine()) != null) {
-                
-                // use comma as separator
                 String[] l = line.split(cvsSplitBy);
                 String File=lop+"-"+l[0]+".csv";
                 PrintStream f = new PrintStream(File);
-                //sinhvien = new SinhVien();
                 tkb = new TKB(l[0],l[1],l[2]);
                 arrTKB.add(tkb);
+                
                 for (SinhVien student : arrSinhVien) {           
                     f.print(student.getmssv()+",");
                     f.print(student.gethoten()+",");
                     f.print(student.getgt()+",");
                     f.println(student.getcmnd());
                 }
-
-                System.out.println("Country [code= " + l[0].toString() + " , name=" + l[1] + ", name=" + l[2] + "]");
-
+                System.out.println(l[0].toString() + "\t" + l[1] + "\t\t\t" + l[2]);
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ImportTKB.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Không tìm thấy file bạn nhập vào hoạc định dạng lỗi");
+            //Logger.getLogger(ImportTKB.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public static void WriteIntoClass(String tenlop, ArrayList arrSinhVien){
-        
-        
+        giaovu(user, pass);
     }
 }

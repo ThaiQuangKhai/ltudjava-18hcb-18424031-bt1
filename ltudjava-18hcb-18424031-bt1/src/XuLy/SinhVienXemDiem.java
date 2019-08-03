@@ -17,9 +17,8 @@ import java.util.Scanner;
  * @author DELL
  */
 public class SinhVienXemDiem {
-    static void DiemSV(String masv, String pass) {
+    static void DiemSV(String user, String pass) throws IOException {
         // TODO code application logic here
-        //String masv="18424007";
         Scanner input=new Scanner(System.in);
         System.out.print("Bạn học lớp nào:");
         String lop = input.nextLine();
@@ -36,19 +35,14 @@ public class SinhVienXemDiem {
 
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
-
-                // use comma as separator
                 String[] bd = line.split(cvsSplitBy);
-                
-                //sinhvien = new SinhVien();
                 bangdiem = new BangDiem(bd[0], bd[1], Float.parseFloat(bd[2]), Float.parseFloat(bd[3]), Float.parseFloat(bd[4]), Float.parseFloat(bd[5]));
                 arrBangDiem.add(bangdiem);
 
             }
-        //PrintStream f = new PrintStream("DangNhap.csv");
         System.out.print("MSSV\t\tHọ tên\t\t\tĐiểm GK\t\tĐiểm CK\t\tĐiểm khác\tĐiểm tổng\n");
         for (BangDiem bangDiem : arrBangDiem) {  
-            if(bangDiem.getMssv().equals(masv))
+            if(bangDiem.getMssv().equals(user))
             {
                 System.out.print(bangDiem.getMssv()+"\t");
                 System.out.print(bangDiem.getHoten()+"\t\t");
@@ -58,7 +52,7 @@ public class SinhVienXemDiem {
                 System.out.println(bangDiem.getDiem_tong()+"\t\t");
             }
         }
-        DangNhap.sinhvien(masv, pass);
+        
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -72,6 +66,6 @@ public class SinhVienXemDiem {
                 }
             }
         }
+        DangNhap.sinhvien(user, pass);
     }
-    
 }

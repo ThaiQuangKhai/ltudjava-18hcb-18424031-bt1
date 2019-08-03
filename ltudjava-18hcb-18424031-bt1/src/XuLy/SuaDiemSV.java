@@ -27,20 +27,20 @@ public class SuaDiemSV {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void suadiemsv(String user, String pass) throws FileNotFoundException, IOException {
         Scanner input=new Scanner(System.in);
-        System.out.println("Sủa điểm sinh viên lớp:");
+        System.out.print("Sủa điểm sinh viên lớp:");
         String csvFile = input.nextLine();
         csvFile+="-DIEM.csv";
-        System.out.println("Mã số sinh viên:");
+        System.out.print("Mã số sinh viên:");
         String mssv= input.nextLine();
-        System.out.println("Điểm giửa kỳ:");
+        System.out.print("Điểm giửa kỳ:");
         String gk = input.nextLine();
-        System.out.println("Điểm cuối kỳ:");
+        System.out.print("Điểm cuối kỳ:");
         String ck = input.nextLine();
-        System.out.println("Điểm khác:");
+        System.out.print("Điểm khác:");
         String dk = input.nextLine();
-        System.out.println("Điểm tổng:");
+        System.out.print("Điểm tổng:");
         String dt = input.nextLine();
 
         BufferedReader br = null;
@@ -48,7 +48,6 @@ public class SuaDiemSV {
         String cvsSplitBy = ",";
         ArrayList<BangDiem> arrBangDiem = new ArrayList<>();
         BangDiem bangDiem;
-        //Scanner scanner = new Scanner(System.in);
         try {
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
@@ -64,7 +63,8 @@ public class SuaDiemSV {
                 arrBangDiem.add(bangDiem);
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Không tìm thấy file bạn nhập vào hoạc định dạng lỗi");
+            //Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
         }
         PrintStream f = new PrintStream(csvFile);
 
@@ -83,6 +83,7 @@ public class SuaDiemSV {
             f.print(bangDiem1.getDiem_khac()+",");
             f.println(bangDiem1.getDiem_tong());
         }
+        DangNhap.giaovu(user,pass);
     }
     
 }

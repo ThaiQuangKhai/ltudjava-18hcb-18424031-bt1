@@ -5,6 +5,7 @@
  */
 package XuLy;
 
+import static XuLy.DangNhap.giaovu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,11 +25,10 @@ import java.util.logging.Logger;
  * @author DELL
  */
 public class ImportLop {
-    public static void main(String[] args) {
+    public static void importlop(String user, String pass) throws IOException {
         Scanner input=new Scanner(System.in);
-        System.out.print("File cấn input:");
+        System.out.print("Nhập lớp cần đưa vào:");
         String csvFile = input.nextLine();
-        //String csvFile = "18HCB.csv";
         csvFile += ".csv";
         BufferedReader br = null;
         String line = "";
@@ -37,21 +38,11 @@ public class ImportLop {
         try {
 
             br = new BufferedReader(new FileReader(csvFile));
-            //ArrayList<String> arrListString = new ArrayList<>();
-            //ArrayList<SinhVien> SinhVienList=new ArrayList<>();
-            //SinhVien s;
             while ((line = br.readLine()) != null) {
-
-                // use comma as separator
                 String[] sv = line.split(cvsSplitBy);
-                //sinhvien = new SinhVien();
                 sinhvien = new SinhVien(sv[0],sv[1],sv[2],sv[3]);
                 arrSinhVien.add(sinhvien);
-
-                //System.out.println("Country [code= " + sv[0].toString() + " , name=" + sv[1] + "]");
-
             }
-        //PrintStream f = new PrintStream("DangNhap.csv");
         System.out.print("MSSV\t\tHọ tên\t\tGiới tính\tCMND\n");
         for (SinhVien student : arrSinhVien) {           
             System.out.print(student.getmssv()+"\t");
@@ -59,11 +50,12 @@ public class ImportLop {
             System.out.print(student.getgt()+"\t");
             System.out.println(student.getcmnd());
         }
-        DangNhap.giaovu();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Không tìm thấy file bạn nhập vào hoạc định dạng lỗi");
+            //e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Không tìm thấy file bạn nhập vào hoạc định dạng lỗi");
+            //e.printStackTrace();
         } finally {
             if (br != null) {
                 try {
@@ -73,6 +65,38 @@ public class ImportLop {
                 }
             }
         }
-
+        addaccount(user,pass,arrSinhVien);
+    }
+    public static void addaccount(String user, String pass, ArrayList<SinhVien> sinhViens) throws IOException {
+     
+        String csvFile = "DangNhap.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        ArrayList<Acccount> arrAccount = new ArrayList<>();
+        Acccount account;
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                String[] ac = line.split(cvsSplitBy);
+                account=new Acccount(ac[0], ac[1]);
+                arrAccount.add(account);
+            }
+        PrintStream f = new PrintStream(csvFile); 
+        
+        for (Acccount acccount : arrAccount) {           
+            f.print(acccount.getUser()+",");
+            f.println(acccount.getPasswourd());
+        }
+        for (SinhVien sinhVien : sinhViens) {           
+            f.print(sinhVien.getmssv()+",");
+            f.println(sinhVien.getmssv());
+        }
+        } catch (FileNotFoundException ex) {
+            System.out.printf("Lỗi"); 
+            //Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Collections.sort(al); 
+        giaovu(user, pass);
     }
 }
